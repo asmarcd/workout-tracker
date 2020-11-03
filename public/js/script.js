@@ -51,7 +51,6 @@ $(function () {
     // Click event for Weights Submit Button
     $("#submitWeights").on("submit", () => {
         trackerBox.innerHTML = "";
-        trackerBox.innerHTML = "";
         const weightsWorkout = {
             name: $("#weightsName").val(),
             weight: $("#weightsWeight").val(),
@@ -68,7 +67,7 @@ $(function () {
         });    
     });
 
-    // Click event for Edit Button
+    // TODO: Click event for Edit Button
     $(".editBtn").on("click", () => {
 
     });

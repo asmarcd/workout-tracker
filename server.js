@@ -25,8 +25,17 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+// Gets all existing workouts for display on the page
+app.get("/", (req, res) => {
+  Workout.find({}, (err, result) => {
+    res.render(result);
+  }).then(workouts => {
+    console.log(workouts)
+  })
+});
+
 // Creates a new cardio workout when the user hits "Submit"
-app.post("/submitCardio", ({body}, res) => {
+app.post("/submitCardio", ({ body }, res) => {
   Workout.create({
     name: body.name,
     type: "Cardio",
@@ -34,13 +43,13 @@ app.post("/submitCardio", ({body}, res) => {
     distance: body.distance
   }).then(newWorkout => {
     res.json(newWorkout);
-  }).catch (err => {
+  }).catch(err => {
     res.json(err);
   });
 });
 
 // Creates a new weights workout when the user hits "Submit"
-app.post("/submitWeights", ({body}, res) => {
+app.post("/submitWeights", ({ body }, res) => {
   Workout.create({
     name: body.name,
     type: "Weights",
@@ -49,12 +58,12 @@ app.post("/submitWeights", ({body}, res) => {
     sets: body.sets
   }).then(newWorkout => {
     res.json(newWorkout);
-  }).catch (err => {
+  }).catch(err => {
     res.status(400).json(err);
   });
 });
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`App running on port ${PORT}!`);
-  });
+  console.log(`App running on port ${PORT}!`);
+});
