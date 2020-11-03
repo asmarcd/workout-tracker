@@ -4,6 +4,16 @@ const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
 
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/deep-thoughts',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
+
 const Workout = require("./workoutModel");
 
 const app = express();
@@ -14,8 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static("public"));
-
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populatedb", { useNewUrlParser: true });
 
 // Creates a new cardio workout when the user hits "Submit"
 app.post("/submitCardio", ({body}, res) => {
@@ -42,7 +50,7 @@ app.post("/submitWeights", ({body}, res) => {
   }).then(newWorkout => {
     res.json(newWorkout);
   }).catch (err => {
-    res.json(err);
+    res.status(400).json(err);
   });
 });
 
